@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM X-Ray</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grid-bg" aria-hidden="true"></div>
+
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <h1 class="title">LLM X-Ray</h1>
+            <p class="subtitle">see inside the transformer</p>
+            <!-- Phase 2: mode switcher -->
+            <nav id="mode-nav" class="mode-nav" style="display: none;">
+                <button class="mode-btn active" data-mode="xray">X-Ray Mode</button>
+                <button class="mode-btn" data-mode="agent">Agent Mode</button>
+            </nav>
+        </header>
+
+        <!-- Panel 01: Prompt Input -->
+        <section id="panel-input" class="panel active">
+            <div class="panel-header">
+                <span class="panel-number">01</span>
+                <h2 class="panel-title">Prompt</h2>
+            </div>
+            <div class="input-group">
+                <div class="select-wrapper">
+                    <select id="prompt-select" class="prompt-select">
+                        <option value="0" selected>What is intelligent transportation system?</option>
+                        <option value="1">Explain what a black hole is.</option>
+                        <option value="2">What is machine learning?</option>
+                        <option value="3">Why is the sky blue?</option>
+                    </select>
+                </div>
+                <div class="input-footer">
+                    <button id="btn-auto" class="btn-run btn-auto">
+                        <span class="btn-text">Auto</span>
+                        <span class="btn-icon">&#9654;</span>
+                    </button>
+                    <button id="btn-next" class="btn-run btn-next">
+                        <span class="btn-text">Next</span>
+                        <span class="btn-icon">&#9654;&#124;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="step-badge" id="step-badge">step 0/61</div>
+        </section>
+
+        <!-- Flow Connector -->
+        <div class="flow-connector" aria-hidden="true">
+            <div class="flow-line"></div>
+            <div class="flow-dot"></div>
+        </div>
+
+        <!-- Panel 02: Tokenization -->
+        <section id="panel-tokens" class="panel">
+            <div class="panel-header">
+                <span class="panel-number">02</span>
+                <h2 class="panel-title">Tokenization</h2>
+                <span class="panel-badge" id="token-count-badge">0 tokens</span>
+            </div>
+            <div id="token-container" class="token-container"></div>
+        </section>
+
+        <!-- Flow Connector -->
+        <div class="flow-connector" aria-hidden="true">
+            <div class="flow-line"></div>
+            <div class="flow-dot"></div>
+        </div>
+
+        <!-- Panel 03: Transformer Layers -->
+        <section id="panel-layers" class="panel">
+            <div class="panel-header">
+                <span class="panel-number">03</span>
+                <h2 class="panel-title">Transformer Layers</h2>
+            </div>
+            <div id="layer-container" class="layer-container">
+                <div class="layer-row" data-layer="0">
+                    <span class="layer-row-label">Layer 1</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+                <div class="layer-row" data-layer="1">
+                    <span class="layer-row-label">Layer 2</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+                <div class="layer-row" data-layer="2">
+                    <span class="layer-row-label">Layer 3</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+                <div class="layer-row" data-layer="3">
+                    <span class="layer-row-label">Layer 4</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+                <div class="layer-row" data-layer="4">
+                    <span class="layer-row-label">Layer 5</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+                <div class="layer-row" data-layer="5">
+                    <span class="layer-row-label">Layer 6</span>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Self-Attention</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Feed-Forward</span><div class="layer-sub-fill"></div></div>
+                    <div class="layer-sub-block"><span class="layer-sub-label">Add &amp; Norm</span><div class="layer-sub-fill"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flow Connector -->
+        <div class="flow-connector" aria-hidden="true">
+            <div class="flow-line"></div>
+            <div class="flow-dot"></div>
+        </div>
+
+        <!-- Panel 04: Attention + Probabilities -->
+        <section id="panel-analysis" class="panel">
+            <div class="analysis-grid">
+                <div class="analysis-col">
+                    <div class="panel-header">
+                        <span class="panel-number">04a</span>
+                        <h2 class="panel-title">Attention Map</h2>
+                    </div>
+                    <div id="attention-wrapper" class="attention-wrapper">
+                        <div class="attention-labels-top" id="attn-labels-top"></div>
+                        <div class="attention-body">
+                            <div class="attention-labels-side" id="attn-labels-side"></div>
+                            <div id="attention-grid" class="attention-grid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="analysis-col">
+                    <div class="panel-header">
+                        <span class="panel-number">04b</span>
+                        <h2 class="panel-title">Next Token Prediction</h2>
+                    </div>
+                    <div id="prob-container" class="prob-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flow Connector -->
+        <div class="flow-connector" aria-hidden="true">
+            <div class="flow-line"></div>
+            <div class="flow-dot"></div>
+        </div>
+
+        <!-- Panel 05: Output -->
+        <section id="panel-output" class="panel">
+            <div class="panel-header">
+                <span class="panel-number">05</span>
+                <h2 class="panel-title">Generated Output</h2>
+                <span class="panel-badge" id="output-step-badge">token 0/20</span>
+            </div>
+            <div id="output-text" class="output-text">
+                <span class="cursor-blink" id="output-cursor">&#9608;</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="footer-text">LLM X-Ray &mdash; Educational visualization. No real LLM involved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

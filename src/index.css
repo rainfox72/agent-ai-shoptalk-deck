@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@keyframes edge-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes edge-pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+  }
+}
+
+.animate-edge-flow {
+  animation: edge-flow 1.5s linear infinite;
+}
+
+.animate-edge-pulse {
+  animation: edge-pulse 2s ease-in-out infinite;
+}
+
+/* Aurora background — slow-moving gradient blobs */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33% { transform: translate(5%, -3%) scale(1.05); }
+  66% { transform: translate(-3%, 5%) scale(0.95); }
+}
+
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33% { transform: translate(-5%, 4%) scale(0.95); }
+  66% { transform: translate(4%, -5%) scale(1.05); }
+}
+
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33% { transform: translate(3%, 5%) scale(1.05); }
+  66% { transform: translate(-4%, -3%) scale(0.95); }
+}
+
+.animate-aurora-1 { animation: aurora-1 15s ease-in-out infinite; }
+.animate-aurora-2 { animation: aurora-2 18s ease-in-out infinite; }
+.animate-aurora-3 { animation: aurora-3 21s ease-in-out infinite; }
+
+/* Keyboard hint fade-in with delay */
+@keyframes hint-fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-hint-fade-in {
+  animation: hint-fade-in 0.6s ease-out 2s both;
+}
+
+/* Gentle bounce for arrow hints */
+@keyframes hint-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.animate-hint-bounce {
+  animation: hint-bounce 1.5s ease-in-out infinite;
+}
+
+/* Pulse glow for active nav dot */
+@keyframes dot-glow {
+  0%, 100% { box-shadow: 0 0 6px currentColor, 0 0 12px currentColor; }
+  50% { box-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+}
+
+.animate-dot-glow {
+  animation: dot-glow 2s ease-in-out infinite;
+}
+
+/* Edge trace-in — stroke draws from hidden to visible */
+@keyframes edge-trace {
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-edge-trace {
+  animation: edge-trace 0.6s ease-out forwards;
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.02;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* Animated gradient border for highlighted nodes */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-border-spin {
+  to { --gradient-angle: 360deg; }
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    rgba(99, 102, 241, 0.5),
+    rgba(168, 85, 247, 0.5),
+    rgba(16, 185, 129, 0.3),
+    rgba(99, 102, 241, 0.5)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradient-border-spin 4s linear infinite;
+  pointer-events: none;
+}

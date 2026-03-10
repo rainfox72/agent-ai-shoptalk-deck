@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent X-Ray</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="agent-styles.css">
+</head>
+<body>
+    <div class="grid-bg" aria-hidden="true"></div>
+
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <h1 class="title">Agent X-Ray</h1>
+            <p class="subtitle">see inside the agent</p>
+        </header>
+
+        <!-- User Input -->
+        <section id="panel-input" class="input-panel">
+            <div class="input-row">
+                <span class="input-label">User:</span>
+                <span id="user-prompt" class="input-text">Plan an optimal bus route for downtown</span>
+                <button id="btn-auto" class="btn-run btn-auto">
+                    <span class="btn-text">Auto</span>
+                    <span class="btn-icon">&#9654;</span>
+                </button>
+                <button id="btn-next" class="btn-run btn-next">
+                    <span class="btn-text">Next</span>
+                    <span class="btn-icon">&#9654;&#124;</span>
+                </button>
+            </div>
+            <div class="step-badge" id="step-badge">step 0/7</div>
+        </section>
+
+        <!-- Agent Hub + Radial Panels -->
+        <div id="hub-layout" class="hub-layout">
+
+            <!-- Top: Memory (RAG) -->
+            <div id="panel-memory" class="node-panel memory" data-position="top">
+                <div class="node-icon">&#128466;</div>
+                <div class="node-label">Memory (RAG)</div>
+                <div class="node-content" id="memory-content"></div>
+                <div class="connector connector-top"></div>
+            </div>
+
+            <!-- Left: Skills -->
+            <div id="panel-skills" class="node-panel skills" data-position="left">
+                <div class="node-icon">&#9889;</div>
+                <div class="node-label">Skills</div>
+                <div class="node-content" id="skills-content"></div>
+                <div class="connector connector-left"></div>
+            </div>
+
+            <!-- Center: Agent Hub -->
+            <div id="panel-agent" class="node-panel agent-hub" data-position="center">
+                <div class="node-icon">&#129302;</div>
+                <div class="node-label">Agent</div>
+                <div class="node-content" id="agent-content"></div>
+            </div>
+
+            <!-- Right: LLM -->
+            <div id="panel-llm" class="node-panel llm" data-position="right">
+                <div class="node-icon">&#129504;</div>
+                <div class="node-label">LLM</div>
+                <div class="node-content" id="llm-content"></div>
+                <div class="connector connector-right"></div>
+            </div>
+
+            <!-- Bottom-left: Search SubAgent -->
+            <div id="panel-search-agent" class="node-panel subagent" data-position="bottom-left">
+                <div class="node-icon">&#128269;</div>
+                <div class="node-label">Search Agent</div>
+                <div class="node-content" id="search-agent-content"></div>
+                <div class="connector connector-bottom-left"></div>
+            </div>
+
+            <!-- Bottom-right: Scheduling SubAgent -->
+            <div id="panel-booking-agent" class="node-panel subagent" data-position="bottom-right">
+                <div class="node-icon">&#128337;</div>
+                <div class="node-label">Scheduling Agent</div>
+                <div class="node-content" id="booking-agent-content"></div>
+                <div class="connector connector-bottom-right"></div>
+            </div>
+
+            <!-- Bottom: MCP / Tools -->
+            <div id="panel-mcp" class="node-panel mcp" data-position="bottom">
+                <div class="node-icon">&#128268;</div>
+                <div class="node-label">MCP / Tools</div>
+                <div class="node-content" id="mcp-content"></div>
+                <div class="connector connector-bottom"></div>
+            </div>
+        </div>
+
+        <!-- Output Panel -->
+        <section id="panel-output" class="output-panel">
+            <div class="output-header">
+                <span class="output-label">Output</span>
+            </div>
+            <div id="output-text" class="output-text">
+                <span class="cursor-blink" id="output-cursor">&#9608;</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="footer-text">Agent X-Ray &mdash; Educational visualization. No real agent involved.</p>
+        </footer>
+    </div>
+
+    <script src="agent-script.js"></script>
+</body>
+</html>

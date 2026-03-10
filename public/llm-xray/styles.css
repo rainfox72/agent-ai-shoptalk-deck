@@ -1,0 +1,655 @@
+/* LLM X-Ray — Styles */
+
+:root {
+    /* Backgrounds */
+    --bg-deep:      #07080f;
+    --bg-surface:   #0d0f1a;
+    --bg-panel:     #111425;
+    --bg-elevated:  #181c33;
+    --bg-hover:     #1f2440;
+
+    /* Neon accents */
+    --blue:         #4d7aff;
+    --blue-dim:     #4d7aff55;
+    --blue-glow:    #4d7aff22;
+    --purple:       #a855f7;
+    --purple-dim:   #a855f755;
+    --purple-glow:  #a855f722;
+    --cyan:         #22d3ee;
+    --cyan-dim:     #22d3ee44;
+
+    /* Semantic */
+    --green:        #34d399;
+    --amber:        #fbbf24;
+    --red:          #f87171;
+
+    /* Text */
+    --text-primary:   #e2e4f0;
+    --text-secondary: #8a8ea8;
+    --text-muted:     #4a4e68;
+
+    /* Fonts */
+    --font-body:  'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-mono:  'JetBrains Mono', 'Cascadia Code', monospace;
+
+    /* Spacing */
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  16px;
+
+    /* Easing */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Subtle grid background */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+        linear-gradient(rgba(77, 122, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77, 122, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* App container */
+#app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+}
+
+/* ── Header ──────────────────────────────── */
+
+#header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+}
+
+.mode-nav {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mode-btn {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 6px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--bg-hover);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mode-btn.active {
+    background: var(--blue-glow);
+    border-color: var(--blue-dim);
+    color: var(--blue);
+}
+
+/* ── Panels ──────────────────────────────── */
+
+.panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    opacity: 0.4;
+    transition: opacity 0.4s ease, border-color 0.4s ease;
+}
+
+.panel.active {
+    opacity: 1;
+    border-color: var(--blue-dim);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.panel-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--blue);
+    background: var(--bg-deep);
+    border: 1px solid var(--blue-dim);
+    border-radius: 4px;
+    padding: 2px 8px;
+    letter-spacing: 0.08em;
+}
+
+.panel-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.panel-badge {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+/* ── Flow Connectors ─────────────────────── */
+
+.flow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 36px;
+    position: relative;
+}
+
+.flow-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--blue-dim), var(--purple-dim));
+}
+
+.flow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue-dim);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+}
+
+@keyframes flow-pulse {
+    0%   { top: 0; opacity: 0; }
+    30%  { opacity: 1; }
+    70%  { opacity: 1; }
+    100% { top: calc(100% - 8px); opacity: 0; }
+}
+
+.flow-dot.active {
+    animation: flow-pulse 0.6s ease-in-out;
+}
+
+/* ── Panel 01: Prompt Input ──────────────── */
+
+#panel-input {
+    position: relative;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.prompt-select {
+    width: 100%;
+    padding: 14px 40px 14px 18px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    background: var(--bg-deep);
+    border: 1px solid var(--bg-elevated);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8ea8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+.prompt-select:focus {
+    border-color: var(--blue-dim);
+}
+
+.prompt-select option {
+    background: var(--bg-panel);
+    color: var(--text-primary);
+    padding: 8px;
+}
+
+.input-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btn-run {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.btn-next {
+    background: transparent;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+}
+
+.btn-next:hover:not(:disabled) {
+    background: var(--blue-glow);
+}
+
+.btn-run:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--blue-dim);
+}
+
+.btn-run:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-run:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    font-size: 0.7rem;
+}
+
+.step-badge {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+}
+
+/* ── Panel 02: Tokenization ──────────────── */
+
+.token-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 40px;
+    align-items: center;
+}
+
+@keyframes token-pop {
+    0%   { opacity: 0; transform: scale(0.5) translateY(8px); }
+    60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.token-box {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--blue-dim);
+    border-radius: var(--radius-sm);
+    color: var(--cyan);
+    white-space: nowrap;
+    animation: token-pop 0.35s var(--ease-out) both;
+}
+
+.token-box.generated {
+    color: var(--green);
+    border-color: rgba(52, 211, 153, 0.35);
+}
+
+/* ── Panel 03: Transformer Layers ────────── */
+
+.layer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.layer-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.layer-row-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    width: 54px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.layer-sub-block {
+    flex: 1;
+    height: 36px;
+    background: var(--bg-deep);
+    border: 1px solid var(--bg-elevated);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.layer-sub-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    z-index: 1;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+
+.layer-sub-block.completed .layer-sub-label {
+    color: var(--text-primary);
+}
+
+.layer-sub-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    border-radius: var(--radius-sm);
+}
+
+@keyframes layer-sweep {
+    0%   { width: 0%; background: var(--blue); box-shadow: none; }
+    50%  { background: var(--purple); box-shadow: 0 0 12px var(--purple-dim); }
+    100% { width: 100%; background: var(--blue); box-shadow: 0 0 8px var(--blue-dim); }
+}
+
+.layer-sub-fill.active {
+    animation: layer-sweep 0.3s var(--ease-out) forwards;
+}
+
+.layer-sub-fill.active.quick {
+    animation-duration: 0.15s;
+}
+
+@keyframes layer-glow {
+    0%, 100% { box-shadow: 0 0 6px var(--blue-dim); }
+    50%      { box-shadow: 0 0 12px var(--blue-dim), 0 0 20px var(--purple-glow); }
+}
+
+.layer-sub-block.completed .layer-sub-fill {
+    width: 100%;
+    background: var(--blue);
+    animation: layer-glow 2s ease-in-out infinite;
+}
+
+@keyframes layer-pulse-anim {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.6; box-shadow: 0 0 16px var(--purple-dim); }
+}
+
+.layer-sub-block.pulse .layer-sub-fill {
+    animation: layer-pulse-anim 0.3s ease-in-out;
+}
+
+/* ── Panel 04: Analysis Grid ─────────────── */
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.analysis-col {
+    min-width: 0;
+}
+
+/* Attention Heatmap */
+.attention-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.attention-labels-top {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+    margin-left: 44px;
+}
+
+.attention-labels-top span {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.attention-body {
+    display: flex;
+    gap: 4px;
+}
+
+.attention-labels-side {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.attention-labels-side span {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.attention-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+    flex: 1;
+    aspect-ratio: 1;
+}
+
+.attn-cell {
+    border-radius: 3px;
+    background: var(--bg-elevated);
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Probability Bars */
+.prob-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    min-height: 180px;
+}
+
+.prob-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.prob-token {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    width: 80px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.prob-bar-track {
+    flex: 1;
+    height: 22px;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.prob-bar-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    border-radius: 4px;
+    transition: width 0.6s var(--ease-out), background 0.3s;
+}
+
+.prob-row.chosen .prob-bar-fill {
+    background: linear-gradient(90deg, var(--green), #34d399cc);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
+}
+
+.prob-row.chosen .prob-token {
+    color: var(--green);
+    font-weight: 700;
+}
+
+.prob-value {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    width: 48px;
+    flex-shrink: 0;
+}
+
+/* ── Panel 05: Output ────────────────────── */
+
+.output-text {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    min-height: 80px;
+    padding: 16px;
+    background: var(--bg-deep);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-elevated);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@keyframes cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+    animation: cursor-blink 1s step-end infinite;
+    color: var(--blue);
+}
+
+/* ── Footer ──────────────────────────────── */
+
+#footer {
+    text-align: center;
+    margin-top: 32px;
+}
+
+.footer-text {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+/* ── Responsive ──────────────────────────── */
+
+@media (max-width: 768px) {
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+    #app {
+        padding: 16px;
+    }
+    .panel {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .layer-sub-block {
+        height: 28px;
+    }
+    .layer-sub-label {
+        font-size: 0.5rem;
+    }
+    .layer-row-label {
+        font-size: 0.55rem;
+        width: 40px;
+    }
+    .prompt-select {
+        font-size: 14px;
+    }
+    .title {
+        font-size: 1.6rem;
+    }
+    .prob-token {
+        width: 60px;
+        font-size: 0.72rem;
+    }
+}
