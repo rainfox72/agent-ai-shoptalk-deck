@@ -2,6 +2,8 @@
 
 An interactive web presentation covering AI agent concepts — from LLMs and prompts to autonomous multi-agent systems. Built for a live shoptalk with embedded interactive demos.
 
+APP: https://agent-ai-shoptalk-deck.vercel.app/
+
 ## Tech Stack
 
 | Layer | Technology |
